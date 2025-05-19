@@ -1,0 +1,50 @@
+{% extends 'eco_base.html' %}
+{% block content %}
+<div style="position: absolute; top: 20px; left: 20px;">
+    <a href="{% url 'home' %}" style="background: gray; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">
+        🏠 Home
+    </a>
+</div>
+
+<div style="text-align: center; margin-top: 50px;">
+    <h2>Admin Profile</h2>
+
+    <!-- Profile Update Form -->
+    <form method="post">
+        {% csrf_token %}
+        <label>Username:</label>
+        <input type="text" name="username" value="{{ admin.username }}" required><br><br>
+
+        <label>Email:</label>
+        <input type="email" name="email" value="{{ admin.email }}" required><br><br>
+
+        <button type="submit">Update Profile</button>
+    </form>
+
+    <div style="margin-top: 20px;">
+        <!-- Change Password Button -->
+        <a href="{% url 'admin_change_password' %}" style="background: orange; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">
+            🔑 Change Password
+        </a>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <!-- Go Back Button -->
+        <button onclick="window.history.back();" 
+                style="background: gray; color: white; padding: 8px 15px; border: none; cursor: pointer; border-radius: 5px; margin-right: 10px;">
+            Go Back
+        </button>
+    
+        <!-- Logout Button -->
+        <form action="{% url 'logout' %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" 
+                    style="background: red; color: white; padding: 8px 15px; border: none; cursor: pointer; border-radius: 5px;">
+                Logout
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+<!-- admin --><!-- admin --><!-- admin -->

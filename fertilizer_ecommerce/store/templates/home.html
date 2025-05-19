@@ -1,0 +1,61 @@
+{% extends 'eco_base.html' %}
+
+{% block content %}
+<div style="text-align: center; margin-top: 30px;">
+    <h2>Welcome to Our Store 🌱</h2>
+
+    <!-- Profile / Login & Register Buttons -->
+    <div style="position: absolute; top: 20px; right: 20px;">
+        {% if user.is_authenticated %}
+            {% if user.is_buyer %}
+                <a href="{% url 'buyer_home' %}" style="background: blue; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">
+                    Buyer Dashboard 👤
+                </a>
+            {% elif user.is_admin %}
+                <a href="{% url 'admin_home' %}" style="background: purple; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">
+                    Admin Dashboard ⚙️
+                </a>
+            {% endif %}
+        {% else %}
+            <a href="{% url 'login' %}" style="background: green; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">
+                Login
+            </a>
+            <a href="{% url 'register' %}" style="background: orange; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">
+                Register
+            </a>
+        {% endif %}
+    </div>
+
+    <!-- Product Display Section -->
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; margin-top: 20px;">
+        {% for product in products %}
+        <div style="border: 1px solid #ddd; margin: 10px; padding: 15px; width: 250px; text-align: center; border-radius: 5px;">
+            <img src="{{ product.image.url }}" width="150" height="150" alt="{{ product.name }}">
+            <h3>{{ product.name }}</h3>
+            <p>Category: {{ product.category }}</p>
+            <p style="font-weight: bold;">₹{{ product.price }}</p>
+
+            {% if user.is_authenticated and user.is_buyer %}
+                <!-- Add to Cart Form (only for buyers) -->
+                <form action="{% url 'add_to_cart' product.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="number" name="quantity" value="1" min="1" style="width: 50px; text-align: center;">
+                    <button type="submit" style="background: green; color: white; padding: 5px 10px; border: none; cursor: pointer; border-radius: 5px;">
+                        🛒 Add to Cart
+                    </button>
+                </form>
+            {% else %}
+                <!-- If user is not a buyer, show a message -->
+                <p style="color: red; font-weight: bold;">Login as a buyer to purchase!</p>
+            {% endif %}
+
+            <a href="{% url 'product_detail' product.id %}" style="display: block; margin-top: 5px; background: blue; color: white; padding: 5px 10px; text-decoration: none; border-radius: 5px;">
+                View Details
+            </a>
+        </div>
+        {% empty %}
+        <p>No products available.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

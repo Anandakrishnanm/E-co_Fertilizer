@@ -1,0 +1,29 @@
+{% extends 'eco_base.html' %}
+
+{% block content %}
+<!-- Home Button -->
+<div style="position: absolute; top: 20px; left: 20px;">
+    <a href="{% url 'home' %}" style="background: #4CAF50; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; font-weight: bold; box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2); transition: 0.3s;">
+        🏠 Home
+    </a>
+</div>
+
+<div style="display: flex; justify-content: center; align-items: center; height: 100vh; background: #f4f4f4;">
+    <div style="background: white; padding: 40px; border-radius: 10px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); text-align: center; width: 350px;">
+        <h2 style="color: #333; margin-bottom: 20px;">Register</h2>
+        <form method="post" style="display: flex; flex-direction: column;">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Username" required style="padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px;">
+            <input type="email" name="email" placeholder="Email" required style="padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px;">
+            <input type="password" name="password" placeholder="Password" required style="padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px;">
+            <button type="submit" style="background: #4CAF50; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Register</button>
+        </form>
+        
+        {% if error %}
+            <p style="color: red; margin-top: 10px;">{{ error }}</p>
+        {% endif %}
+
+        <p style="margin-top: 15px;">Already have an account? <a href="{% url 'login' %}" style="color: #4CAF50; font-weight: bold; text-decoration: none;">Login here</a></p>
+    </div>
+</div>
+{% endblock %}

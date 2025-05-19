@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .treatment {
+            text-align: left;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Prediction Result</h2>
+        <p><strong>Disease Detected:</strong> {{ disease }}</p>
+        <img src="{{ image_path }}" alt="Uploaded Image">
+        
+        {% if treatment %}
+            <div class="treatment">
+                <h3>Treatment Information</h3>
+                <p><strong>Symptoms:</strong> {{ treatment["Symptoms"] }}</p>
+                <p><strong>Causes:</strong> {{ treatment["Causes"] }}</p>
+                <p><strong>Recommended Medicine/Fertilizer/Vitamins:</strong> {{ treatment["Recommended Medicine/Fertilizer/Vitamins"] }}</p>
+                <p><strong>Dosage & Duration:</strong> {{ treatment["Dosage & Duration"] }}</p>
+                <p><strong>Preventive Measures:</strong> {{ treatment["Preventive Measures"] }}</p>
+                <p><strong>Recommended Pesticides:</strong> {{ treatment["Recommended Pesticides"] }}</p>
+                <p><strong>Pesticide Usage Measures:</strong> {{ treatment["Pesticide Usage Measures"] }}</p>
+            </div>
+        {% else %}
+            <p>No treatment information found.</p>
+        {% endif %}
+        
+        <br>
+        <a href="/">Upload Another Image</a>
+    </div>
+</body>
+</html>

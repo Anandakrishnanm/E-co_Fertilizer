@@ -1,0 +1,59 @@
+{% extends 'eco_base.html' %}
+
+{% block content %}
+<div style="position: absolute; top: 20px; left: 20px;">
+    <a href="{% url 'home' %}" style="background: gray; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">
+        🏠 Home
+    </a>
+</div>
+<div style="width: 60%; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; box-shadow: 2px 2px 10px #aaa;">
+    <h2 style="text-align: center; margin-bottom: 20px;">🛒 Checkout</h2>
+
+    <h3>📝 Order Summary</h3>
+    <table border="1" style="width: 100%; text-align: center; border-collapse: collapse;">
+        <tr style="background: #f4f4f4;">
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+        </tr>
+        {% for item in cart_items %}
+        <tr>
+            <td>{{ item.product.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>₹{{ item.product.price }}</td>
+            <td>₹{{ item.total_price }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h3 style="margin-top: 20px;">🚚 Shipping Details</h3>
+    <form method="post" action="{% url 'checkout' %}" onsubmit="return confirmOrder();">
+        {% csrf_token %}
+        
+        <label><b>Full Name:</b></label>
+        <input type="text" name="full_name" required style="width: 100%; padding: 8px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc;"><br><br>
+
+        <label><b>Address:</b></label>
+        <textarea name="address" required style="width: 100%; padding: 8px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc;"></textarea><br><br>
+
+        <label><b>Phone Number:</b></label>
+        <input type="text" name="phone" required style="width: 100%; padding: 8px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc;"><br><br>
+
+        <button type="submit" style="background: green; color: white; padding: 10px; border: none; cursor: pointer; border-radius: 5px; width: 100%; font-size: 16px;">
+            ✅ Confirm Order
+        </button>
+    </form>
+</div>
+
+<!-- JavaScript for confirmation popup -->
+<script>
+    function confirmOrder() {
+        return confirm("Are you sure you want to place this order? ✅");
+    }
+</script>
+
+{% endblock %}
+
+
+<!-- buyer -->

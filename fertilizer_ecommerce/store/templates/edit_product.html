@@ -1,0 +1,25 @@
+{% extends 'eco_base.html' %}
+{% block content %}<div style="position: absolute; top: 20px; left: 20px;">
+    <a href="{% url 'home' %}" style="background: gray; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">
+        🏠 Home
+    </a>
+</div>
+<div style="text-align: center; margin-top: 50px;">
+    <h2>Edit Product</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="text" name="name" value="{{ product.name }}" required><br><br>
+        <textarea name="description" required>{{ product.description }}</textarea><br><br>
+        <input type="number" name="price" value="{{ product.price }}" step="0.01" required><br><br>
+        <select name="category">
+            <option value="Fertilizer" {% if product.category == "Fertilizer" %}selected{% endif %}>Fertilizer</option>
+            <option value="Pesticide" {% if product.category == "Pesticide" %}selected{% endif %}>Pesticide</option>
+        </select><br><br>
+        <input type="file" name="image"><br><br>
+        <button type="submit">Update Product</button>
+    </form>
+</div>
+{% endblock %}
+
+
+<!-- admin --><!-- admin --><!-- admin -->

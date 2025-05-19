@@ -1,0 +1,25 @@
+{% extends 'eco_base.html' %}
+{% block content %}<div style="position: absolute; top: 20px; left: 20px;">
+    <a href="{% url 'home' %}" style="background: gray; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">
+        🏠 Home
+    </a>
+</div>
+<div style="text-align: center; margin-top: 50px;">
+    <h2>Edit Profile</h2>
+    
+    <form method="post" style="width: 50%; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
+        {% csrf_token %}
+        <label>Username:</label>
+        <input type="text" name="username" value="{{ user.username }}" required style="width: 100%; padding: 5px;"><br><br>
+
+        <label>Email:</label>
+        <input type="email" name="email" value="{{ user.email }}" required style="width: 100%; padding: 5px;"><br><br>
+
+        <button type="submit" style="background: green; color: white; padding: 10px; border: none; cursor: pointer; border-radius: 5px; width: 100%;">
+            Save Changes
+        </button>
+    </form>
+</div>
+{% endblock %}
+
+<!-- buyer -->

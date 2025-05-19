@@ -1,0 +1,51 @@
+{% extends 'eco_base.html' %}
+{% block content %}<div style="position: absolute; top: 20px; left: 20px;">
+    <a href="{% url 'home' %}" style="background: gray; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">
+        🏠 Home
+    </a>
+</div>
+<div style="text-align: center; margin-top: 30px;">
+    <h2>📦 My Orders</h2>
+
+    {% if orders %}
+    <table border="1" style="width: 80%; margin: auto; text-align: center;">
+        <tr>
+            <th>Order ID</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Total Price</th>
+            <th>Status</th>
+            <th>Date Ordered</th>
+            <th>Action</th>
+        </tr>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.product.name }}</td>
+            <td>{{ order.quantity }}</td>
+            <td>₹{{ order.total_price }}</td>
+            <td>{{ order.status }}</td>
+            <td>{{ order.date_ordered }}</td>
+            <td>
+                {% if order.status != "Delivered" and order.status != "Canceled" %}
+                <form action="{% url 'cancel_order' order.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" style="background: red; color: white; padding: 5px; border: none; cursor: pointer;">
+                        ❌ Cancel Order
+                    </button>
+                </form>
+                {% else %}
+                <span style="color: gray;">Not Cancelable</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>No orders placed yet.</p>
+    {% endif %}
+
+    <br>
+    <a href="{% url 'buyer_home' %}" style="background: green; color: white; padding: 10px; text-decoration: none;">🏠 Back to Home</a>
+</div>
+{% endblock %}

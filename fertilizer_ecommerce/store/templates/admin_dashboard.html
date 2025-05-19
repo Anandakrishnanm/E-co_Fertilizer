@@ -1,0 +1,54 @@
+{% extends 'eco_base.html' %}
+{% block content %}
+<div style="position: absolute; top: 20px; left: 20px;">
+    <a href="{% url 'home' %}" style="background: gray; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">
+        🏠 Home
+    </a>
+</div>
+<div style="text-align: center; margin-top: 50px;">
+    <h2>Admin Dashboard - Product Management</h2>
+    <div style="text-align: right; margin-right: 20px;">
+        <!-- Go Back Button -->
+        <button onclick="window.history.back();" 
+                style="background: gray; color: white; padding: 8px 15px; border: none; cursor: pointer; border-radius: 5px; margin-right: 10px;">
+            Go Back
+        </button>
+    
+        <!-- Logout Button -->
+        <form action="{% url 'logout' %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" 
+                    style="background: red; color: white; padding: 8px 15px; border: none; cursor: pointer; border-radius: 5px;">
+                Logout
+            </button>
+        </form>
+    </div>
+    
+    
+    <a href="{% url 'add_product' %}" style="background: green; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">Add New Product</a>
+    <br><br>
+    
+    <table border="1" style="width: 80%; margin: auto; text-align: center;">
+        <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+        {% for product in products %}
+        <tr>
+            <td><img src="{{ product.image.url }}" width="50" height="50"></td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.category }}</td>
+            <td>₹{{ product.price }}</td>
+
+            <td>
+                <a href="{% url 'edit_product' product.id %}" style="color: blue;">Edit</a> | 
+                <a href="{% url 'delete_product' product.id %}" style="color: red;">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'eco_base.html' %}
+{% block content %}
+<div style="position: absolute; top: 20px; left: 20px;">
+    <a href="{% url 'home' %}" style="background: gray; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">
+        🏠 Home
+    </a>
+</div>
+<div style="width: 50%; margin: auto; text-align: center;">
+    <h2>👤 Buyer Profile</h2>
+    
+    <p><strong>Username:</strong> {{ user.username }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Phone:</strong> {{ user.phone }}</p>
+    <p><strong>Address:</strong> {{ user.address }}</p>
+
+    <a href="{% url 'edit_profile' %}" style="background: blue; color: white; padding: 10px; text-decoration: none;">✏ Edit Profile</a>
+    <a href="{% url 'change_password' %}" style="background: red; color: white; padding: 10px; text-decoration: none;">🔑 Change Password</a>
+</div>
+{% endblock %}

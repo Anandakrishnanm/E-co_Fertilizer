@@ -1,0 +1,45 @@
+{% extends 'eco_base.html' %}
+{% block content %}
+<div style="text-align: center; margin-top: 50px;">
+    <h2>User Management</h2>
+    <div style="text-align: right; margin-right: 20px;">
+        <!-- Go Back Button -->
+        <button onclick="window.history.back();" 
+                style="background: gray; color: white; padding: 8px 15px; border: none; cursor: pointer; border-radius: 5px; margin-right: 10px;">
+            Go Back
+        </button>
+    
+        <!-- Logout Button -->
+        <form action="{% url 'logout' %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" 
+                    style="background: red; color: white; padding: 8px 15px; border: none; cursor: pointer; border-radius: 5px;">
+                Logout
+            </button>
+        </form>
+    </div>
+    
+
+    <table border="1" style="width: 80%; margin: auto; text-align: center;">
+        <tr>
+            <th>User ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+                <a href="{% url 'delete_user' user.id %}" style="color: red;">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
+
+
+<!-- admin --><!-- admin --><!-- admin -->

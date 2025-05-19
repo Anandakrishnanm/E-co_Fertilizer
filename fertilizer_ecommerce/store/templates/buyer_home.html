@@ -1,0 +1,58 @@
+{% extends 'eco_base.html' %}
+{% block content %}
+<div style="position: absolute; top: 20px; left: 20px;">
+    <a href="{% url 'home' %}" style="background: gray; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">
+        🏠 Home
+    </a>
+</div>
+<div style="text-align: center; margin-top: 50px;">
+
+    <h2>Buyer Home</h2>
+<div style="position: absolute; top: 20px; left: 20px;">
+    <a href="{% url 'home' %}" style="background: gray; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">
+        🏠 Home
+    </a>
+</div>
+    <!-- Logout Button -->
+    <div style="text-align: right; margin-right: 20px;">
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" style="background: red; color: white; padding: 8px 15px; border: none; cursor: pointer; border-radius: 5px;">
+                Logout
+            </button>
+        </form>
+    </div>
+
+    <!-- Profile Management Section -->
+    <div style="border: 1px solid #ddd; padding: 20px; width: 50%; margin: 20px auto; border-radius: 10px;">
+        <h3>👤 My Profile</h3>
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+
+        <a href="{% url 'edit_profile' %}" 
+           style="background: orange; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">
+            ✏️ Edit Profile
+        </a>
+
+        <a href="{% url 'change_password' %}" 
+           style="background: darkblue; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">
+            🔑 Change Password
+        </a>
+    </div>
+
+    <!-- Navigation Links -->
+    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 30px;">
+        <a href="{% url 'buyer_dashboard' %}" style="background: green; color: white; padding: 15px; text-decoration: none; border-radius: 5px;">
+            View Products
+        </a>
+
+        <a href="{% url 'order_history' %}" style="background: blue; color: white; padding: 15px; text-decoration: none; border-radius: 5px;">
+            Order History
+        </a>
+
+        <a href="{% url 'view_cart' %}" style="background: purple; color: white; padding: 15px; text-decoration: none; border-radius: 5px;">
+            🛒 View Cart
+        </a>
+    </div>
+</div>
+{% endblock %}

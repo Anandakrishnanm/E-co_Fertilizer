@@ -1,0 +1,63 @@
+{% extends 'eco_base.html' %}
+{% block content %}<div style="position: absolute; top: 20px; left: 20px;">
+    <a href="{% url 'home' %}" style="background: gray; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">
+        🏠 Home
+    </a>
+</div>
+<div style="text-align: center; margin-top: 30px;">
+    <h2>📦 Order Management</h2>
+
+    {% if orders %}
+    <table border="1" style="width: 90%; margin: auto; text-align: center;">
+        <tr>
+            <th>Order ID</th>
+            <th>Buyer Name</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Total Price</th>
+            <th>Status</th>
+            <th>Date Ordered</th>
+            <th>Update Status</th>
+        </tr>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.user.username }}</td>
+            <td>{{ order.product.name }}</td>
+            <td>{{ order.quantity }}</td>
+            <td>₹{{ order.total_price }}</td>
+            <td>{{ order.status }}</td>
+            <td>{{ order.date_ordered }}</td>
+            <td>
+                {% if order.status != "Canceled" and order.status != "Delivered" %}
+                <form action="{% url 'update_order_status' order.id %}" method="post">
+                    {% csrf_token %}
+                    <select name="status" required>
+                        <option value="Pending" {% if order.status == "Pending" %}selected{% endif %}>Pending</option>
+                        <option value="Processing" {% if order.status == "Processing" %}selected{% endif %}>Processing</option>
+                        <option value="Shipped" {% if order.status == "Shipped" %}selected{% endif %}>Shipped</option>
+                        <option value="Delivered" {% if order.status == "Delivered" %}selected{% endif %}>Delivered</option>
+                        <option value="Canceled" {% if order.status == "Canceled" %}selected{% endif %} > Canceled </option>
+                    </select>
+                    <button type="submit" style="background: blue; color: white; padding: 5px; border: none; cursor: pointer;">
+                        ✅ Update
+                    </button>
+                </form>
+                {% else %}
+                <span style="color: gray;">Status Locked</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>No orders available.</p>
+    {% endif %}
+
+    <br>
+    <a href="{% url 'admin_home' %}" style="background: green; color: white; padding: 10px; text-decoration: none;">🏠 Back to Admin Home</a>
+</div>
+{% endblock %}
+
+
+<!-- admin -->
